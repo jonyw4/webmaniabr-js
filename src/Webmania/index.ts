@@ -4,7 +4,7 @@ import {
   WebmaniaBRFetchClientError,
   WebmaniaBRFetchServerError
 } from '../errors';
-import { ServerResponse, ServerErrorResponse } from '../types';
+import { Response, Request } from '../types';
 
 export default class WebmaniaBR {
   consumerKey: string;
@@ -37,7 +37,7 @@ export default class WebmaniaBR {
     data: AxiosRequestConfig['data'] = {}
   ): Promise<T> {
     return axios
-      .request<any, ServerResponse<T>>({
+      .request<any, Response.Server<T>>({
         baseURL: 'https://webmaniabr.com/api/1',
         method,
         url,
@@ -53,7 +53,7 @@ export default class WebmaniaBR {
         data
       })
       .then((response) => response.data)
-      .catch((error: AxiosError<ServerErrorResponse>) => {
+      .catch((error: AxiosError<Response.ServerError>) => {
         if (error.response) {
           throw new WebmaniaBRFetchServerError(
             error.message,
@@ -73,5 +73,29 @@ export default class WebmaniaBR {
           throw new WebmaniaBRFetchOtherError(error.message, error.config);
         }
       });
+  }
+
+  /** Para verificar se o Sefaz está Online ou Offline */
+  public verifyStatusSefaz() {
+    return this.fetch<Response.VerifyStatusSefaz>('/nfe/sefaz', 'GET', {}, {});
+  }
+
+  /** Para verificar os dias que falta para expirar o Certificado A1 */
+  public verifyExpirationCertificado() {
+    return this.fetch<Response.VerifyExpirationCertificadoA1>(
+      '/nfe/certificado',
+      'GET',
+      {},
+      {}
+    );
+  }
+  /** Cria uma nota fiscal */
+  public createNotaFiscal(data: Request.CreateNotaFiscal) {
+    return this.fetch<Response.CreateNotaFiscal>(
+      '/nfe/emissao',
+      'POST',
+      {},
+      data
+    );
   }
 }
