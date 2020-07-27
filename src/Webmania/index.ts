@@ -1,10 +1,10 @@
-import axios, { Method, AxiosRequestConfig } from 'axios';
+import axios, { Method, AxiosRequestConfig, AxiosError } from 'axios';
 import {
   WebmaniaBRFetchOtherError,
   WebmaniaBRFetchClientError,
   WebmaniaBRFetchServerError
 } from '../errors';
-import { ServerResponse } from '../types';
+import { ServerResponse, ServerErrorResponse } from '../types';
 
 export default class WebmaniaBR {
   consumerKey: string;
@@ -27,14 +27,17 @@ export default class WebmaniaBR {
     this.timeout = timeout;
   }
 
+  /**
+   * 📨 Fetch in the WebmaniaBR API
+   */
   public async fetch<T = any>(
     url: string,
     method: Method = 'GET',
     params: AxiosRequestConfig['params'] = {},
     data: AxiosRequestConfig['data'] = {}
-  ) {
-    try {
-      const response = await axios.request<any, ServerResponse<T>>({
+  ): Promise<T> {
+    return axios
+      .request<any, ServerResponse<T>>({
         baseURL: 'https://webmaniabr.com/api/1',
         method,
         url,
@@ -48,17 +51,27 @@ export default class WebmaniaBR {
         },
         params,
         data
+      })
+      .then((response) => response.data)
+      .catch((error: AxiosError<ServerErrorResponse>) => {
+        if (error.response) {
+          throw new WebmaniaBRFetchServerError(
+            error.message,
+            error.config,
+            error.code,
+            error.request,
+            error.response
+          );
+        } else if (error.request) {
+          throw new WebmaniaBRFetchClientError(
+            error.message,
+            error.config,
+            error.code,
+            error.request
+          );
+        } else {
+          throw new WebmaniaBRFetchOtherError(error.message, error.config);
+        }
       });
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      if (error.response) {
-        throw new WebmaniaBRFetchServerError(error.response.status);
-      } else if (error.request) {
-        throw new WebmaniaBRFetchClientError();
-      } else {
-        throw new WebmaniaBRFetchOtherError();
-      }
-    }
   }
 }
