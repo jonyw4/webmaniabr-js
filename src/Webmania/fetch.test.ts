@@ -15,7 +15,7 @@ describe('WebmaniaBR.fetch()', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('should fetch a GET request successfully from ME API', async () => {
+  it('should fetch a GET request successfully from Webmania API', async () => {
     // @ts-ignore
     axios.request.mockImplementationOnce(() =>
       Promise.resolve({
@@ -29,20 +29,23 @@ describe('WebmaniaBR.fetch()', () => {
     expect(response).toEqual({ access_token: 'token123' });
     expect(axios.request).toHaveBeenCalledTimes(1);
     expect(axios.request).toHaveBeenCalledWith({
-      baseURL: 'https://sandbox.melhorenvio.com.br',
+      baseURL: 'https://webmaniabr.com/api/1',
       url: '/test',
       method: 'GET',
       data: {},
       headers: {
-        Accept: 'application/json',
+        'X-Access-Token': 'at',
+        'X-Access-Token-Secret': 'ats',
+        'X-Consumer-Key': 'ck',
+        'X-Consumer-Secret': 'cs',
         'Content-Type': 'application/json'
       },
       params: {},
-      timeout: 5000
+      timeout: 10000
     });
   });
 
-  it('should fetch an WebmaniaBROtherError from ME API', async () => {
+  it('should fetch an WebmaniaBROtherError from Webmania API', async () => {
     // @ts-ignore
     axios.request.mockRejectedValue(new AxiosTestError({}));
     const wmbr = new WebmaniaBR('ck', 'cs', 'at', 'ats', 10000);
@@ -50,7 +53,7 @@ describe('WebmaniaBR.fetch()', () => {
     await expect(fetch).rejects.toThrow(WebmaniaBRFetchOtherError);
   });
 
-  it('should fetch an WebmaniaBRFetchClientError from ME API', async () => {
+  it('should fetch an WebmaniaBRFetchClientError from Webmania API', async () => {
     // @ts-ignore
     axios.request.mockRejectedValue(new AxiosTestError({ request: {} }));
     const wmbr = new WebmaniaBR('ck', 'cs', 'at', 'ats', 10000);
@@ -58,7 +61,7 @@ describe('WebmaniaBR.fetch()', () => {
     await expect(fetch).rejects.toThrow(WebmaniaBRFetchClientError);
   });
 
-  it('should fetch an WebmaniaBRFetchServerError from ME API', async () => {
+  it('should fetch an WebmaniaBRFetchServerError from Webmania API', async () => {
     // @ts-ignore
     axios.request.mockRejectedValue(
       new AxiosTestError({ response: { status: '404' } })
