@@ -38,7 +38,7 @@ export default class WebmaniaBR {
   ): Promise<T> {
     return axios
       .request<any, Response.Server<T>>({
-        baseURL: 'https://webmaniabr.com/api/1',
+        baseURL: 'https://webmaniabr.com/api/1/nfe/',
         method,
         url,
         timeout: this.timeout,
@@ -77,13 +77,13 @@ export default class WebmaniaBR {
 
   /** Para verificar se o Sefaz está Online ou Offline */
   public verifyStatusSefaz() {
-    return this.fetch<Response.VerifyStatusSefaz>('/nfe/sefaz', 'GET', {}, {});
+    return this.fetch<Response.VerifyStatusSefaz>('/sefaz', 'GET', {}, {});
   }
 
   /** Para verificar os dias que falta para expirar o Certificado A1 */
   public verifyExpirationCertificado() {
     return this.fetch<Response.VerifyExpirationCertificadoA1>(
-      '/nfe/certificado',
+      '/certificado',
       'GET',
       {},
       {}
@@ -91,11 +91,6 @@ export default class WebmaniaBR {
   }
   /** Cria uma nota fiscal */
   public createNotaFiscal(data: Request.CreateNotaFiscal) {
-    return this.fetch<Response.CreateNotaFiscal>(
-      '/nfe/emissao',
-      'POST',
-      {},
-      data
-    );
+    return this.fetch<Response.CreateNotaFiscal>('/emissao', 'POST', {}, data);
   }
 }
