@@ -62,8 +62,8 @@ describe('WebmaniaBR.verifyExpirationCertificado()', () => {
     });
     expect(axios.request).toHaveBeenCalledTimes(1);
     expect(axios.request).toHaveBeenCalledWith({
-      baseURL: 'https://webmaniabr.com/api/1',
-      url: '/nfe/emissao',
+      baseURL: 'https://webmaniabr.com/api/1/nfe/',
+      url: '/emissao',
       method: 'POST',
       data: {
         modelo: '2',

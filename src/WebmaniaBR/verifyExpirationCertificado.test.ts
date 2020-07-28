@@ -25,8 +25,8 @@ describe('WebmaniaBR.verifyExpirationCertificado()', () => {
     expect(response).toEqual({ expiration: 30 });
     expect(axios.request).toHaveBeenCalledTimes(1);
     expect(axios.request).toHaveBeenCalledWith({
-      baseURL: 'https://webmaniabr.com/api/1',
-      url: '/nfe/certificado',
+      baseURL: 'https://webmaniabr.com/api/1/nfe/',
+      url: '/certificado',
       method: 'GET',
       data: {},
       headers: {

@@ -2,7 +2,7 @@ import WebmaniaBR from '../../src';
 
 const TIMEOUT = 10000;
 test(
-  'call verifyStatusSefaz and check response',
+  'call verifyExpirationCertificado and check response',
   async () => {
     const wmbr = new WebmaniaBR(
       String(process.env.API_CONSUMER_KEY),
@@ -11,7 +11,7 @@ test(
       String(process.env.API_ACCESS_TOKEN_SECRET),
       TIMEOUT
     );
-    const response = await wmbr.verifyStatusSefaz();
+    const response = await wmbr.verifyExpirationCertificado();
     console.log(response);
     expect(response).toBeTruthy();
   },

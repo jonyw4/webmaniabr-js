@@ -29,7 +29,7 @@ describe('WebmaniaBR.fetch()', () => {
     expect(response).toEqual({ access_token: 'token123' });
     expect(axios.request).toHaveBeenCalledTimes(1);
     expect(axios.request).toHaveBeenCalledWith({
-      baseURL: 'https://webmaniabr.com/api/1',
+      baseURL: 'https://webmaniabr.com/api/1/nfe/',
       url: '/test',
       method: 'GET',
       data: {},

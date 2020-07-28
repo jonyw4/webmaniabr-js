@@ -25,8 +25,8 @@ describe('WebmaniaBR.verifyStatusSefaz()', () => {
     expect(response).toEqual({ status: 'online' });
     expect(axios.request).toHaveBeenCalledTimes(1);
     expect(axios.request).toHaveBeenCalledWith({
-      baseURL: 'https://webmaniabr.com/api/1',
-      url: '/nfe/sefaz',
+      baseURL: 'https://webmaniabr.com/api/1/nfe/',
+      url: '/sefaz',
       method: 'GET',
       data: {},
       headers: {
