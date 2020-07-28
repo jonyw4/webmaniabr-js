@@ -4,7 +4,10 @@ env:
   NPM_TOKEN: ${{secrets.NPM_TOKEN}}
   CODECOV_TOKEN: ${{secrets.CODECOV_TOKEN}}
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  API_ME_TOKEN: ${{secrets.API_ME_TOKEN}}
+  API_CONSUMER_KEY: ${{secrets.API_CONSUMER_KEY}}
+  API_CONSUMER_SECRET: ${{secrets.API_CONSUMER_SECRET}}
+  API_ACCESS_TOKEN: ${{secrets.API_ACCESS_TOKEN}}
+  API_ACCESS_TOKEN_SECRET: ${{secrets.API_ACCESS_TOKEN_SECRET}}
 jobs:
   build:
     runs-on: ubuntu-latest
