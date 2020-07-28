@@ -1,3 +1,5 @@
+type Optional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
+
 export namespace Response {
   export interface Server<T> {
     data: T;
@@ -613,8 +615,6 @@ export namespace Request {
     url_notificacao?: string;
     /** Informações de todos os produtos adquiridos */
     produtos: Array<CreateNotaFiscalProduto>;
-    /** Informações do pedido */
-    pedido: CreateNotaFiscalPedidoNacional | CreateNotaFiscalPedidoImportado;
     /** Informações do transporte */
     transporte?: CreateNotaFiscalTransporte;
     /** Fatura referente a Nota Fiscal */
@@ -689,6 +689,13 @@ export namespace Request {
   type CreateNotaFiscalDefault = CreateNotaFiscalBase & {
     /** Modelo da Nota Fiscal */
     modelo: '1';
+    /** Informações do pedido */
+    pedido:
+      | Optional<
+          CreateNotaFiscalPedidoNacional,
+          'valor_pagamento' | 'cnpj_credenciadora' | 'bandeira' | 'autorizacao'
+        >
+      | CreateNotaFiscalPedidoImportado;
     cliente:
       | CreateNotaFiscalClientePessoaFisica
       | CreateNotaFiscalClientePessoaJuridica
@@ -710,6 +717,8 @@ export namespace Request {
   > & {
     /** Modelo da Nota Fiscal */
     modelo: '2';
+    /** Informações do pedido */
+    pedido: CreateNotaFiscalPedidoNacional | CreateNotaFiscalPedidoImportado;
     cliente: Partial<
       Omit<
         | CreateNotaFiscalClientePessoaFisica
