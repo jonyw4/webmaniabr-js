@@ -11,9 +11,9 @@
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint --fix 'src/**/*.ts'",
     "test": "npm run test:unit",
-    "test:ci": "npm run test:unit && npm run test:integration && codecov",
-    "test:unit": "jest --collectCoverage --clearCache ./src",
-    "test:integration": "jest --clearCache ./tests",
+    "test:ci": "npm run test:integration && npm run test:unit && codecov",
+    "test:unit": "jest --collectCoverage ./src",
+    "test:integration": "jest ./tests",
     "docs": "typedoc --out docs src",
     "semantic-release": "semantic-release"
   },
@@ -28,8 +28,7 @@
   },
   "homepage": "https://github.com/jonyw4/webmaniabr-js#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "universal-base64": "^2.1.0"
+    "axios": "0.19.2"
   },
   "devDependencies": {
     "@commitlint/cli": "9.0.1",
