@@ -542,7 +542,7 @@ export namespace Request {
   };
   type CreateNotaFiscalPedidoImportado = CreateNotaFiscalPedidoBase;
 
-  type CreateNotaFiscalTransporte = DadosEndereco & {
+  type CreateNotaFiscalTransporte = Partial<DadosEndereco> & {
     /** Quantidade de volumes transportados */
     volume?: string;
     /** Espécie dos volumes transportados */
@@ -573,8 +573,8 @@ export namespace Request {
     seguro?: string;
     /** TODO: Add tipagem */
     reboque?: any;
-    entrega: DadosEnderecoComPais;
-    retirada: DadosEnderecoComPais;
+    entrega?: DadosEnderecoComPais;
+    retirada?: DadosEnderecoComPais;
   };
 
   interface CreateNotaFiscalBase {
