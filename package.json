@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/jonyw4/webmaniabr-js#readme",
   "dependencies": {
-    "axios": "0.19.2"
+    "axios": "0.21.2"
   },
   "devDependencies": {
     "@commitlint/cli": "9.0.1",
